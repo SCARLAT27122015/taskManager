@@ -36,34 +36,41 @@ $(document).ready(function($) {
 
 	$("#description").keyup(function(){
 		$(this).next('.invalid-feedback').hide();
-	});	
+	});		
 });
 
 function getTotalTasks (){
 	if (localStorage.length>0) {
 		$("#task-table").show();
+		//getAllTasks();
 	}else{
 		$("#task-table").hide();
 	}	
 }
 
+
 function getAllTasks(){
-	list_tasks = [];
-	
-	for (var i = 1; i <= localStorage.length; i++) {
+	$("#taskList").html('');
+	for (var i = localStorage.length; i > 0; i--) {
 		var task = JSON.parse(localStorage.getItem(i));
 		var done = task.done ? 'Done' : 'Pending';
 		row = `
-			<tr>
-				<td>${ task.title}</td>
-				<td>${ task.description}</td>
-				<td>${ done }</td>
+			<tr class="row_${ task.id }">
+				<td id="titltask_${ task.id }"><b>${ task.title}</b></td>
+				<td id="desctask_${ task.id }">${ task.description}</td>
+				<td id="donetask_${ task.id }">${ done }</td>
 				<td>
-					<button class="btn btn-secondary mb-2" id=remove_${task.id}>Remove</button>
-					<button class="btn btn-primary mb-2" id=done_${task.id}>Set as done</button>
+					<button class="btn btn-secondary mb-2 remover" onClick=setRemoval(${task.id});>Remove</button>
+					<button class="btn btn-primary mb-2 doner">Set as done</button>
 				</td>
 			</tr>
 		`;
-		$("#taskList").append(row);			
+		$("#taskList").append(row);
 	};
+}
+
+function setRemoval(id){
+	localStorage.removeItem(id);
+	$(".row_" + id).remove();
+	getTotalTasks ();
 }
