@@ -61,7 +61,7 @@ function getAllTasks(){
 				<td id="donetask_${ task.id }">${ done }</td>
 				<td>
 					<button class="btn btn-secondary mb-2 remover" onClick=setRemoval(${task.id});>Remove</button>
-					<button class="btn btn-primary mb-2 doner">Set as done</button>
+					<button class="btn btn-primary mb-2 doner" onClick=setDone(${task.id});>Set as done</button>
 				</td>
 			</tr>
 		`;
@@ -73,4 +73,17 @@ function setRemoval(id){
 	localStorage.removeItem(id);
 	$(".row_" + id).remove();
 	getTotalTasks ();
+}
+
+function setDone(id){
+	var title, description,objTask;
+	title = $("#titltask_" + id).text();
+	description = $("#desctask_" + id).text();
+	objTask = {};
+	objTask['id'] = id; 
+	objTask['title'] = title;
+	objTask['description'] = description;
+	objTask['done'] = true;
+	localStorage.setItem(id, JSON.stringify(objTask));
+	getAllTasks();	
 }
