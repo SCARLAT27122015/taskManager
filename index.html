@@ -7,7 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="assets/css/styles.css">
     <title>Task manager</title>
   </head>
   <body>
@@ -42,6 +42,23 @@
         <div class="col-12">
           <button class="btn-primary btn" data-toggle="modal" data-target="#addingTask">Add task</button>
         </div>
+      </div>
+      <div class="row" id="task-table">
+        <div class="col-12 mt-5">
+          <h4>My Tasks</h4>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>Completed</th>
+                  <th>Options</th>
+                </tr>
+              </thead>
+              <tbody id="taskList">
+              </tbody>
+            </table>
+        </div> 
       </div>
     </div>
 
