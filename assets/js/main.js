@@ -58,7 +58,7 @@ function getAllTasks(){
 			<tr class="row_${ task.id }">
 				<td id="titltask_${ task.id }"><b>${ task.title}</b></td>
 				<td id="desctask_${ task.id }">${ task.description}</td>
-				<td id="donetask_${ task.id }">${ done }</td>
+				<td class="isDone" id="donetask_${ task.id }">${ done }</td>
 				<td>
 					<button class="btn btn-secondary mb-2 remover" onClick=setRemoval(${task.id});>Remove</button>
 					<button class="btn btn-primary mb-2 doner" onClick=setDone(${task.id});>Set as done</button>
@@ -85,5 +85,5 @@ function setDone(id){
 	objTask['description'] = description;
 	objTask['done'] = true;
 	localStorage.setItem(id, JSON.stringify(objTask));
-	getAllTasks();	
+	getAllTasks();
 }
