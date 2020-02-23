@@ -33,11 +33,54 @@
     <br>
 
     <div class="container">
-      <h3>Collapsible Navbar</h3>
-      <p>In this example, the navigation bar is hidden on small screens and replaced by a button in the top right corner (try to re-size this window).</p>
-      <p>Only when the button is clicked, the navigation bar will be displayed.</p>
-      <p>Tip: You can also remove the .navbar-expand-md class to ALWAYS hide navbar links and display the toggler button.</p>
+      <div class="row">
+          <div class="col-12">
+              <h3>Task manager</h3>
+          </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <button class="btn-primary btn" data-toggle="modal" data-target="#addingTask">Add task</button>
+        </div>
+      </div>
     </div>
+
+    <!-- The Modal -->
+  <div class="modal" id="addingTask">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Modal Heading</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          <form action="#">
+            <div class="form-group">
+              <label for="title">Title:</label>
+              <input type="text" class="form-control" id="title" placeholder="Enter a title" name="title" required autocomplete="off">
+              <div class="invalid-feedback">Please fill out this field.</div>
+            </div>
+            <div class="form-group">
+              <label for="description">Description:</label>
+              <textarea class="form-control" id="description" placeholder="Enter a description" name="description" required autocomplete="off"></textarea>
+              <div class="invalid-feedback">Please fill out this field.</div>
+            </div>
+          </form>
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="addNewTask">Add</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
