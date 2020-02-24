@@ -1,7 +1,9 @@
 var title, description;
 $(document).ready(function($) {
+	var len = getLastKey();
 	getTotalTasks();
-	getAllTasks();
+	getAllTasks(len+1);
+
 	$("#addNewTask").click(function(){
 		title = $("#title").val();
 		description	= $("#description").val();
@@ -16,17 +18,28 @@ $(document).ready(function($) {
 
 		if (title && description) {
 			var objTask = {};
-			var id = localStorage.length + 1;
+			var id;
+			var initial_id = counterRows();
+			if (initial_id == 0) {
+				id = 1;	
+			}else{
+				var elem_id = $(".tasks").first();
+				elem_id = elem_id.attr('class');
+				elem_id = elem_id.replace('row_','');
+				elem_id = parseInt(elem_id) + 1;
+				id = elem_id;
+			}
+			//id = localStorage.length + 1;
 			objTask['id'] = id; 
 			objTask['title'] = title;
 			objTask['description'] = description;
 			objTask['done'] = false;
 			localStorage.setItem(id, JSON.stringify(objTask));
-			console.log(localStorage.length);
+			
 			$("input,textarea").val('');
 			$("#addingTask").modal('hide');
 			getTotalTasks ();
-			getAllTasks();
+			getAllTasks(id);
 		}
 	});	
 
@@ -49,24 +62,30 @@ function getTotalTasks (){
 }
 
 
-function getAllTasks(){
+function getAllTasks(last=1){
 	$("#taskList").html('');
-	for (var i = localStorage.length; i > 0; i--) {
+	for (var i = last + 1; i > 0; i--) {
 		var task = JSON.parse(localStorage.getItem(i));
-		var done = task.done ? 'Done' : 'Pending';
-		row = `
-			<tr class="row_${ task.id }">
-				<td id="titltask_${ task.id }"><b>${ task.title}</b></td>
-				<td id="desctask_${ task.id }">${ task.description}</td>
-				<td class="isDone" id="donetask_${ task.id }">${ done }</td>
-				<td>
-					<button class="btn btn-secondary mb-2 remover" onClick=setRemoval(${task.id});>Remove</button>
-					<button class="btn btn-primary mb-2 doner" onClick=setDone(${task.id});>Set as done</button>
-				</td>
-			</tr>
-		`;
-		$("#taskList").append(row);
+		if (task) {
+			var done = task.done ? 'Done' : 'Pending';
+			row = `
+				<tr class="row_${ task.id } tasks">
+					<td id="titltask_${ task.id }"><b>${ task.title}</b></td>
+					<td id="desctask_${ task.id }">${ task.description}</td>
+					<td class="isDone" id="donetask_${ task.id }">${ done }</td>
+					<td>
+						<button class="btn btn-secondary mb-2 remover" onClick=setRemoval(${task.id});>Remove</button>
+						<button class="btn btn-primary mb-2 doner" onClick=setDone(${task.id});>Set as done</button>
+					</td>
+				</tr>
+			`;
+			$("#taskList").append(row);
+		}else{
+			continue;
+		}
+		
 	};
+	
 }
 
 function setRemoval(id){
@@ -76,7 +95,12 @@ function setRemoval(id){
 }
 
 function setDone(id){
-	var title, description,objTask;
+	var title, description,objTask, listTasks;
+	listTasks = [];
+	$(".tasks").each(function(index, el) {
+		
+	});
+
 	title = $("#titltask_" + id).text();
 	description = $("#desctask_" + id).text();
 	objTask = {};
@@ -84,6 +108,22 @@ function setDone(id){
 	objTask['title'] = title;
 	objTask['description'] = description;
 	objTask['done'] = true;
+	
 	localStorage.setItem(id, JSON.stringify(objTask));
-	getAllTasks();
+	var len = getLastKey();
+	getAllTasks(len + 1);
+}
+
+function counterRows (){
+	var counter = 0;
+	$(".tasks").each(function(index, el) {
+		counter++;
+	});
+	return counter;
+}
+
+function getLastKey(){
+	totalKey = new Array(localStorage.length).fill().map(i => localStorage.key(i));
+	totalKey = parseInt(totalKey);
+	return totalKey;	
 }
