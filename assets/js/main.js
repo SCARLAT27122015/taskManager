@@ -2,7 +2,7 @@ var title, description;
 $(document).ready(function($) {
 	var len = getLastKey();
 	getTotalTasks();
-	getAllTasks(len+1);
+	getAllTasks(len+100);
 
 	$("#addNewTask").click(function(){
 		title = $("#title").val();
@@ -68,6 +68,7 @@ function getAllTasks(last=1){
 		var task = JSON.parse(localStorage.getItem(i));
 		if (task) {
 			var done = task.done ? 'Done' : 'Pending';
+			
 			row = `
 				<tr class="row_${ task.id } tasks">
 					<td id="titltask_${ task.id }"><b>${ task.title}</b></td>
@@ -80,6 +81,11 @@ function getAllTasks(last=1){
 				</tr>
 			`;
 			$("#taskList").append(row);
+			if (done == 'Done') {
+				$("#donetask_"+ task.id).addClass('text-success');
+			}else{
+				$("#donetask_"+ task.id).addClass('text-danger');
+			}
 		}else{
 			continue;
 		}
@@ -111,7 +117,7 @@ function setDone(id){
 	
 	localStorage.setItem(id, JSON.stringify(objTask));
 	var len = getLastKey();
-	getAllTasks(len + 1);
+	getAllTasks(len + 100);
 }
 
 function counterRows (){
